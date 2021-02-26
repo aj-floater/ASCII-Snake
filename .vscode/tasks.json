@@ -1,0 +1,31 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: g++.exe build active file",
+			"command": "C:\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-g",
+				"-I./headers",
+				"${workspaceFolder}\\src\\main.cpp",
+				"${workspaceFolder}\\data\\resources.o",
+				"-o",
+				"${workspaceFolder}\\Snake",
+				"-static-libgcc",
+				"-static-libstdc++"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: C:\\MinGW\\bin\\g++.exe"
+		}
+	]
+}
