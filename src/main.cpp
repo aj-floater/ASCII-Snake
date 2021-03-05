@@ -159,90 +159,56 @@ int main() {
     //---------------------------------------------------- Render Loop ----------------------------------------------------
 
     while (appIsRunning) {
-
-        if (_kbhit()){
-            char key;
-            if (!mainMenu){
-                key = _getch();
-                switch(key){
-                    case 'w' | 'W':{
-                        if (player_1.head_direction != 2){
-                            player_1.head_direction = 0;
-                        } break; 
-                    }
-                    case 'd':{
-                        if (player_1.head_direction != 3){
-                            player_1.head_direction = 1;
-                        } break; 
-                    }
-                    case 's':{
-                        if (player_1.head_direction != 0){
-                            player_1.head_direction = 2;
-                        } break; 
-                    }
-                    case 'a':{
-                        if (player_1.head_direction != 1){
-                            player_1.head_direction = 3;
-                        } break; 
-                    }
-                    case VK_ESCAPE:{
-                        mainMenu = true;
-                        branchPos = MAIN;
-                        break; 
-                    }
-                    
-                }
-            }
-            else if (mainMenu){
-                key = _getch();
-                switch(key){
-                    case 'w':{
-                        CURRENT_BRANCH.decreaseButtonPos(1); 
-                        break; 
-                    }
-                    case 'd':{
-                        if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Speed"){
-                            fpsInterval -= 10;
-                            if (fpsInterval < fastestSpeed)
-                                fpsInterval = fastestSpeed;
-                        }
-                        break; 
-                    }
-                    case 's':{
-                        CURRENT_BRANCH.increaseButtonPos(1);
-                        break; 
-                    }
-                    case 'a':{
-                        if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Speed"){
-                            fpsInterval += 10;
-                            if (fpsInterval > slowestSpeed)
-                                fpsInterval = slowestSpeed;
-                        }
-                        break; 
-                    }
-                    case VK_SPACE:{
-                        if (branchPos == MAIN){
-                            if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Play Snake")
-                                mainMenu = false;
-                            else if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Options")
-                                branchPos = OPTIONS;
-                            else if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Quit")
-                                appIsRunning = false;
-                        }
-                        else if (branchPos == OPTIONS){
-                            if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Wrap-around")
-                                wrapAround = (wrapAround) ? false : true;
-                            else if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "< Back")
-                                branchPos = MAIN;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-
         if (mainMenu){ // if the program is in the main menus, output the menu graphics
             if (fps()){ // ensures the consoleBuffer is updated however many times per second
+
+                if (_kbhit()){
+                    char key = _getch();
+                    switch(key){
+                        case 'w':{
+                            CURRENT_BRANCH.decreaseButtonPos(1); 
+                            break; 
+                        }
+                        case 'd':{
+                            if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Speed"){
+                                fpsInterval -= 10;
+                                if (fpsInterval < fastestSpeed)
+                                    fpsInterval = fastestSpeed;
+                            }
+                            break; 
+                        }
+                        case 's':{
+                            CURRENT_BRANCH.increaseButtonPos(1);
+                            break; 
+                        }
+                        case 'a':{
+                            if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Speed"){
+                                fpsInterval += 10;
+                                if (fpsInterval > slowestSpeed)
+                                    fpsInterval = slowestSpeed;
+                            }
+                            break; 
+                        }
+                        case VK_SPACE:{
+                            if (branchPos == MAIN){
+                                if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Play Snake")
+                                    mainMenu = false;
+                                else if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Options")
+                                    branchPos = OPTIONS;
+                                else if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Quit")
+                                    appIsRunning = false;
+                            }
+                            else if (branchPos == OPTIONS){
+                                if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "Wrap-around")
+                                    wrapAround = (wrapAround) ? false : true;
+                                else if (CURRENT_BRANCH.buttons.at(CURRENT_BRANCH.buttonPosition).title == "< Back")
+                                    branchPos = MAIN;
+                            }
+                            break;
+                        }
+                    }
+                }
+
                 coordinate center(u_width/2, u_height/2);
                 clearConsoleBuffer();
 
@@ -286,6 +252,42 @@ int main() {
         
         if (!mainMenu){ // if the program is not in the main menus, play the game
             if (fps()){ // ensures the consoleBuffer is updated however many times per second
+
+                if (_kbhit()){
+                    char key;
+                    if (!mainMenu){
+                        key = _getch();
+                        switch(key){
+                            case 'w' | 'W':{
+                                if (player_1.head_direction != 2){
+                                    player_1.head_direction = 0;
+                                } break; 
+                            }
+                            case 'd':{
+                                if (player_1.head_direction != 3){
+                                    player_1.head_direction = 1;
+                                } break; 
+                            }
+                            case 's':{
+                                if (player_1.head_direction != 0){
+                                    player_1.head_direction = 2;
+                                } break; 
+                            }
+                            case 'a':{
+                                if (player_1.head_direction != 1){
+                                    player_1.head_direction = 3;
+                                } break; 
+                            }
+                            case VK_ESCAPE:{
+                                mainMenu = true;
+                                branchPos = MAIN;
+                                break; 
+                            }
+                            
+                        }
+                    }
+                }
+
                 if (player_1.head_direction == 0) { // up
                     player_1.head_position[1] -= 1;
                     if (player_1.head_position[1] < 0){
@@ -323,8 +325,8 @@ int main() {
                     apple.position[1] = randomEven(u_height);
                     snakeExtension = player_1.snake_length - 1;
                 }
-                for (int x : player_1.segment_positions){
-                    if (player_1.head_position[0] + u_width * player_1.head_position[1] == x){
+                for (int pos : player_1.segment_positions){
+                    if (player_1.head_position[0] + u_width * player_1.head_position[1] == pos){
                         gameOver();
                     }
                 }
